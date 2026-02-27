@@ -55,5 +55,6 @@ public class AuthServiceImpl implements AuthService {
 
 		return jwt.generateToken(user.getEmail());
 	}
+
 }
 

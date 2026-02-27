@@ -62,7 +62,7 @@ public class OrderController {
 
 	// GET ONE
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<OrderResponse>> one(@PathVariable Long id){
+	public ResponseEntity<ApiResponse<OrderResponse>> getOrderById(@PathVariable Long id){
 
 		return ResponseEntity.ok(
 				new ApiResponse<>(true,"Order",
