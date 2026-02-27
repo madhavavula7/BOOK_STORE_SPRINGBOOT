@@ -4,57 +4,137 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 
-@Data
+@Data 
 public class OrderResponse {
-	private Long orderId;
-	private String customer;
-	private Double totalPrice;
-	private String orderStatus;
-	private LocalDateTime orderDate;
-	public LocalDateTime getOrderDate() {
-		return orderDate;
-	}
-	public void setOrderDate(LocalDateTime localDateTime) {
-		this.orderDate = localDateTime;
-	}
-	private List<ItemDetail> items; // This list carries the book details
-	public Long getOrderId() {
+    private Long orderId;
+    private String invoiceNumber;    
+    private String customer;
+    private String email;
+    
+    // --- NEW ADDRESS FIELDS ---
+    private String shippingAddress; 
+    private String billingAddress;
+    
+    private Double netAmount;       
+    private Double taxAmount;       
+    private Double shippingCharges;
+    private Double totalPrice;      
+    
+    private String orderStatus;
+    private LocalDateTime orderDate;
+    private List<ItemDetail> items;
+
+    public Long getOrderId() {
 		return orderId;
 	}
+
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
 	public String getCustomer() {
 		return customer;
 	}
+
 	public void setCustomer(String customer) {
 		this.customer = customer;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(String shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+
+	public String getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(String billingAddress) {
+		this.billingAddress = billingAddress;
+	}
+
+	public Double getNetAmount() {
+		return netAmount;
+	}
+
+	public void setNetAmount(Double netAmount) {
+		this.netAmount = netAmount;
+	}
+
+	public Double getTaxAmount() {
+		return taxAmount;
+	}
+
+	public void setTaxAmount(Double taxAmount) {
+		this.taxAmount = taxAmount;
+	}
+
+	public Double getShippingCharges() {
+		return shippingCharges;
+	}
+
+	public void setShippingCharges(Double shippingCharges) {
+		this.shippingCharges = shippingCharges;
+	}
+
 	public Double getTotalPrice() {
 		return totalPrice;
 	}
+
 	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+
 	public String getOrderStatus() {
 		return orderStatus;
 	}
+
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
+
+	public LocalDateTime getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(LocalDateTime orderDate) {
+		this.orderDate = orderDate;
+	}
+
 	public List<ItemDetail> getItems() {
 		return items;
 	}
+
 	public void setItems(List<ItemDetail> items) {
 		this.items = items;
 	}
+
 	@Data
-	public static class ItemDetail {
-		private Long bookId;
-		private String title;
-		private String imageUrl;
-		private Double price;
-		private Integer quantity;
+    public static class ItemDetail {
+        private Long bookId;
+        private String title;
+        private String imageUrl;
+        private Double price;
+        private Integer quantity;
 		public Long getBookId() {
 			return bookId;
 		}
@@ -85,6 +165,5 @@ public class OrderResponse {
 		public void setQuantity(Integer quantity) {
 			this.quantity = quantity;
 		}
-	}
+    }
 }
-

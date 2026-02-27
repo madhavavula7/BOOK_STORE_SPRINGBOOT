@@ -40,4 +40,9 @@ public class JwtUtil {
 				.getBody()
 				.getSubject();
 	}
+	private String generateInvoiceNumber(Long orderId) {
+	    int year = java.time.LocalDate.now().getYear();
+	    // Formats to: INV-2026-00001
+	    return String.format("INV-%d-%05d", year, orderId);
+	}
 }

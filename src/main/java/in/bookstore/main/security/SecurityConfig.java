@@ -33,11 +33,9 @@ public class SecurityConfig {
 		this.bookController = bookController;
 	}
 
-	//    trying new 
 	@Bean 
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-		// This is the most important line to fix the UI error
 		.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 		.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(auth -> auth

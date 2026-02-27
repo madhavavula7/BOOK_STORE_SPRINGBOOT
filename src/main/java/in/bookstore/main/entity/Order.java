@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,6 +34,108 @@ public class Order {
 	
 	private LocalDateTime orderDate;
 	
+	@Column(nullable = false)
+	private Double taxAmount;
+
+	@Column(nullable = false)
+	private Double shippingCharges;
+
+	@Column(nullable = false)
+	private Double netAmount;
+	
+	@Column(unique = true)
+	private String invoiceNumber;
+	
+	private String sellerName = "IN.BOOKSTORE PVT LTD";
+	private String sellerTaxId = "27AAACV1234L1Z5"; // Your GSTIN
+	private String sellerAddress = "123 Tech Park, Hyderabad, India";
+
+	private String billingAddress;
+	private String shippingAddress;
+	private String placeOfSupply; // e.g., "Maharashtra" or "Telangana"
+	
+	
+	
+	public String getSellerName() {
+		return sellerName;
+	}
+
+	public void setSellerName(String sellerName) {
+		this.sellerName = sellerName;
+	}
+
+	public String getSellerTaxId() {
+		return sellerTaxId;
+	}
+
+	public void setSellerTaxId(String sellerTaxId) {
+		this.sellerTaxId = sellerTaxId;
+	}
+
+	public String getSellerAddress() {
+		return sellerAddress;
+	}
+
+	public void setSellerAddress(String sellerAddress) {
+		this.sellerAddress = sellerAddress;
+	}
+
+	public String getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(String billingAddress) {
+		this.billingAddress = billingAddress;
+	}
+
+	public String getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(String shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+
+	public String getPlaceOfSupply() {
+		return placeOfSupply;
+	}
+
+	public void setPlaceOfSupply(String placeOfSupply) {
+		this.placeOfSupply = placeOfSupply;
+	}
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+	public Double getTaxAmount() {
+		return taxAmount;
+	}
+
+	public void setTaxAmount(Double taxAmount) {
+		this.taxAmount = taxAmount;
+	}
+
+	public Double getShippingCharges() {
+		return shippingCharges;
+	}
+
+	public void setShippingCharges(Double shippingCharges) {
+		this.shippingCharges = shippingCharges;
+	}
+
+	public Double getNetAmount() {
+		return netAmount;
+	}
+
+	public void setNetAmount(Double netAmount) {
+		this.netAmount = netAmount;
+	}
+
 	public LocalDateTime getOrderDate() {
 		return orderDate;
 	}
