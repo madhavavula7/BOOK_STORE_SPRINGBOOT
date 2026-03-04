@@ -47,12 +47,12 @@ public class Order {
 	private String invoiceNumber;
 	
 	private String sellerName = "IN.BOOKSTORE PVT LTD";
-	private String sellerTaxId = "27AAACV1234L1Z5"; // Your GSTIN
+	private String sellerTaxId = "27AAACV1234L1Z5";
 	private String sellerAddress = "123 Tech Park, Hyderabad, India";
 
 	private String billingAddress;
 	private String shippingAddress;
-	private String placeOfSupply; // e.g., "Maharashtra" or "Telangana"
+	private String placeOfSupply;
 	
 	
 	
