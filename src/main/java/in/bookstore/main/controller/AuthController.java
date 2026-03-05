@@ -1,5 +1,6 @@
 package in.bookstore.main.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +19,9 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*")
 public class AuthController {
 
-	private final AuthService service;
+	@Autowired
+	private AuthService service;
 
-	public AuthController(AuthService service) {
-		super();
-		this.service = service;
-	}
 
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody RegisterRequest req){

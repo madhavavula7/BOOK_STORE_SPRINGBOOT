@@ -2,6 +2,7 @@ package in.bookstore.main.serviceImpl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import in.bookstore.main.dto.BookRequest;
@@ -14,12 +15,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
-	private final BookRepository repo;
+	@Autowired
+	private BookRepository repo;
 
-	public BookServiceImpl(BookRepository repo) {
-		super();
-		this.repo = repo;
-	}
 
 	@Override
 	public List<Book> getAll(){
