@@ -1,5 +1,6 @@
 package in.bookstore.main.serviceImpl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-	private final UserRepository repo;
-	private final PasswordEncoder encoder;
-	private final JwtUtil jwt;
-
-	public AuthServiceImpl(UserRepository repo, PasswordEncoder encoder, JwtUtil jwt){
-		this.repo = repo;
-		this.encoder = encoder;
-		this.jwt = jwt;
-	}
+	@Autowired
+	private UserRepository repo;
+	@Autowired
+	private PasswordEncoder encoder;
+	@Autowired
+	private JwtUtil jwt;
 
 
 	@Override

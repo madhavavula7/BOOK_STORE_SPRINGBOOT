@@ -3,6 +3,7 @@ package in.bookstore.main.security;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,14 +22,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-	private final JwtUtil jwtUtil;
-	private final UserRepository repo;
+	@Autowired
+	private JwtUtil jwtUtil;
+	@Autowired
+	private UserRepository repo;
 
-	public JwtFilter(JwtUtil jwtUtil, UserRepository repo) {
-		super();
-		this.jwtUtil = jwtUtil;
-		this.repo = repo;
-	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request,
