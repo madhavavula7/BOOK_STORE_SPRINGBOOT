@@ -2,6 +2,7 @@ package in.bookstore.main.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,11 +28,8 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*")
 public class OrderController {
 
-	private final OrderService service;
-
-	public OrderController(OrderService service) {
-		this.service = service;
-	}
+	@Autowired
+	private OrderService service;
 
 	private String getEmail(){
 		return SecurityContextHolder.getContext()
@@ -45,8 +43,8 @@ public class OrderController {
 			@RequestBody @Valid OrderRequest req){
 
 		return ResponseEntity.ok(
-				new ApiResponse<>(true,"Order placed",
-						service.placeOrder(req,getEmail()))
+				new ApiResponse<OrderResponse>(true, "Order placed",
+						service.placeOrder(req, getEmail()))
 				);
 	}
 
@@ -55,7 +53,7 @@ public class OrderController {
 	public ResponseEntity<ApiResponse<List<OrderResponse>>> all(){
 
 		return ResponseEntity.ok(
-				new ApiResponse<>(true,"All orders",
+				new ApiResponse<List<OrderResponse>>(true, "All orders",
 						service.getAll())
 				);
 	}
@@ -65,17 +63,17 @@ public class OrderController {
 	public ResponseEntity<ApiResponse<OrderResponse>> getOrderById(@PathVariable Long id){
 
 		return ResponseEntity.ok(
-				new ApiResponse<>(true,"Order",
+				new ApiResponse<OrderResponse>(true, "Order",
 						service.getById(id))
 				);
 	}
 
 	// UPDATE STATUS
 	@PutMapping("/{id}/status")
-	public ResponseEntity<ApiResponse<OrderResponse>> status(@PathVariable Long id,@RequestParam String status){
+	public ResponseEntity<ApiResponse<OrderResponse>> status(@PathVariable Long id, @RequestParam String status){
 		return ResponseEntity.ok(
-				new ApiResponse<>(true,"Status updated",
-						service.updateStatus(id,status))
+				new ApiResponse<OrderResponse>(true, "Status updated",
+						service.updateStatus(id, status))
 				);
 	}
 
@@ -83,7 +81,7 @@ public class OrderController {
 	@GetMapping("/my")
 	public ResponseEntity<ApiResponse<List<OrderResponse>>> myOrders(){
 		return ResponseEntity.ok(
-				new ApiResponse<>(true,"My Orders",
+				new ApiResponse<List<OrderResponse>>(true, "My Orders",
 						service.getMyOrders(getEmail()))
 				);
 	}

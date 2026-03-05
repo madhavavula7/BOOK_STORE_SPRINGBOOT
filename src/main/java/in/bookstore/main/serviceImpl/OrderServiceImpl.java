@@ -3,6 +3,7 @@ package in.bookstore.main.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,16 +23,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // Automatically generates the constructor for final fields
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderRepository orderRepo;
-    private final BookRepository bookRepo;
-    private final UserRepository userRepo;   
+	@Autowired
+    private OrderRepository orderRepo;
+	@Autowired
+    private BookRepository bookRepo;
+	@Autowired
+    private UserRepository userRepo;   
 
-    public OrderServiceImpl(OrderRepository orderRepo, BookRepository bookRepo, UserRepository userRepo) {
-		super();
-		this.orderRepo = orderRepo;
-		this.bookRepo = bookRepo;
-		this.userRepo = userRepo;
-	}
 
     @Override
     @Transactional // Ensures stock and order details are rolled back if something fails
