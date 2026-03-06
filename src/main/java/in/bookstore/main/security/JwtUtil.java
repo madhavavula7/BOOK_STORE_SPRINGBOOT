@@ -1,6 +1,7 @@
 package in.bookstore.main.security;
 
 import java.sql.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.crypto.SecretKey;
 
@@ -20,17 +21,20 @@ public class JwtUtil {
 		return Keys.hmacShaKeyFor(secret.getBytes());
 	}
 
-	public String generateToken(String email){
-        long now = System.currentTimeMillis();
-        long expiry = now + (1000L * 60 * 60 * 24);
+	public String generateToken(String email) {
+	    long now = System.currentTimeMillis();
+	    
+	    // Setting expiry for 24 hours (24 * 60 * 60 * 1000)
+	    // Using TimeUnit makes the code much easier to read and less prone to math errors
+	    long expiry = now + TimeUnit.HOURS.toMillis(24);
 
-        return Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date(now))       // When it was created
-                .setExpiration(new Date(expiry))  // When it expires
-                .signWith(getKey())
-                .compact();
-    }
+	    return Jwts.builder()
+	            .setSubject(email)
+	            .setIssuedAt(new Date(now))       
+	            .setExpiration(new Date(expiry))  
+	            .signWith(getKey())
+	            .compact();
+	}
 
 	public String extractEmail(String token){
 		return Jwts.parserBuilder()
