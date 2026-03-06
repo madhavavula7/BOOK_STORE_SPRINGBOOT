@@ -135,26 +135,17 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // 1. Double-check this matches your EXACT browser URL
-        configuration.setAllowedOrigins(Arrays.asList(
+        // Use patterns to allow any subdomain of your frontend
+        configuration.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost:5173",
+            "https://*.vercel.app",
             "https://boot-store-frontend.vercel.app"
         ));
         
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        
-        // 2. Add 'Origin' and 'Accept' - Browsers often require these
-        configuration.setAllowedHeaders(Arrays.asList(
-            "Authorization", 
-            "Content-Type", 
-            "Accept", 
-            "X-Requested-With", 
-            "Origin"
-        ));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "X-Requested-With", "Origin"));
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
-        
         configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L); 
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
