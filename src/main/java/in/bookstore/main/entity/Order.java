@@ -52,6 +52,24 @@ public class Order {
 
 	private String billingAddress;
 	private String shippingAddress;
+	private String state;
+	private int pincode;
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public int getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(int pincode) {
+		this.pincode = pincode;
+	}
+
 	private String placeOfSupply;
 	
 	

@@ -9,6 +9,7 @@ import in.bookstore.main.dto.BookRequest;
 import in.bookstore.main.entity.Book;
 import in.bookstore.main.repository.BookRepository;
 import in.bookstore.main.service.BookService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -16,12 +17,12 @@ import lombok.RequiredArgsConstructor;
 public class BookServiceImpl implements BookService {
 
 	@Autowired
-	private BookRepository repo;
+	private BookRepository bookRepository;
 
 
 	@Override
 	public List<Book> getAll(){
-		return repo.findAll();
+		return bookRepository.findAll();
 	}
 
 	@Override
@@ -35,7 +36,27 @@ public class BookServiceImpl implements BookService {
 		book.setDescription(dto.getDescription());
 		book.setStockQuantity(dto.getStockQuantity());
 		book.setImageUrl(dto.getImageUrl());
-		return repo.save(book);
+		return bookRepository.save(book);
 	}
+	
+	@Override
+	@Transactional
+    public void updateBulkInventory(List<Book> updatedBooks) {
+        for (Book updatedBook : updatedBooks) {
+            // 1. Find existing record
+            Book existingBook = bookRepository.findById(updatedBook.getId())
+                    .orElseThrow(() -> new RuntimeException("Book ID " + updatedBook.getId() + " not found"));
+
+            // 2. Rewrite/Update the values
+            existingBook.setTitle(updatedBook.getTitle());
+            existingBook.setPrice(updatedBook.getPrice());
+            existingBook.setStockQuantity(updatedBook.getStockQuantity());
+            existingBook.setGenre(updatedBook.getGenre());
+            existingBook.setImageUrl(updatedBook.getImageUrl());
+
+            // 3. Save inside the loop (Hibernate batches these automatically)
+            bookRepository.save(existingBook);
+        }
+    }
 }
 

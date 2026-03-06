@@ -43,6 +43,8 @@ public class OrderServiceImpl implements OrderService {
      // --- FROM THE USER (Request) ---
         order.setShippingAddress(req.getShippingAddress());
         order.setBillingAddress(req.getBillingAddress());
+        order.setState(req.getState());
+        order.setPincode(req.getPincode());
         order.setPlaceOfSupply(req.getState()); 
 
         // --- FROM THE ADMIN (Hardcoded/System) ---
@@ -139,6 +141,8 @@ public class OrderServiceImpl implements OrderService {
         // Map the addresses saved during placeOrder
         res.setShippingAddress(order.getShippingAddress());
         res.setBillingAddress(order.getBillingAddress());
+        res.setState(order.getState());
+        res.setPincode(order.getPincode());
         
         res.setNetAmount(order.getNetAmount());
         res.setTaxAmount(order.getTaxAmount());
@@ -156,6 +160,10 @@ public class OrderServiceImpl implements OrderService {
                 detail.setImageUrl(item.getBook().getImageUrl());
                 detail.setPrice(item.getPrice());
                 detail.setQuantity(item.getQuantity());
+                detail.setGenre(item.getBook().getGenre());
+                detail.setIsbn(item.getBook().getIsbn());
+                detail.setDescription(item.getBook().getDescription());
+                detail.setAuthor(item.getBook().getAuthor());
                 return detail;
             }).toList());
         }

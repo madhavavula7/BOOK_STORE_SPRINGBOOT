@@ -14,8 +14,26 @@ public class OrderResponse {
     // --- NEW ADDRESS FIELDS ---
     private String shippingAddress; 
     private String billingAddress;
+    private String state;
+    private int pincode;
     
-    private Double netAmount;       
+    public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public int getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(int pincode) {
+		this.pincode = pincode;
+	}
+
+	private Double netAmount;       
     private Double taxAmount;       
     private Double shippingCharges;
     private Double totalPrice;      
@@ -135,6 +153,35 @@ public class OrderResponse {
         private String imageUrl;
         private Double price;
         private Integer quantity;
+        private String genre;
+        private String isbn;
+        private String author;
+        private String description;
+        
+		public String getGenre() {
+			return genre;
+		}
+		public void setGenre(String genre) {
+			this.genre = genre;
+		}
+		public String getIsbn() {
+			return isbn;
+		}
+		public void setIsbn(String isbn) {
+			this.isbn = isbn;
+		}
+		public String getAuthor() {
+			return author;
+		}
+		public void setAuthor(String author) {
+			this.author = author;
+		}
+		public String getDescription() {
+			return description;
+		}
+		public void setDescription(String description) {
+			this.description = description;
+		}
 		public Long getBookId() {
 			return bookId;
 		}

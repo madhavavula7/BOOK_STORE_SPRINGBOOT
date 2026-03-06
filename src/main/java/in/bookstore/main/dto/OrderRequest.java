@@ -12,7 +12,7 @@ public class OrderRequest {
 	private String shippingAddress; 
     private String billingAddress;  
     private String state;
-    private String pincode;
+    private int pincode;
 
 	public String getShippingAddress() {
 		return shippingAddress;
@@ -38,11 +38,11 @@ public class OrderRequest {
 		this.state = state;
 	}
 
-	public String getPincode() {
+	public int getPincode() {
 		return pincode;
 	}
 
-	public void setPincode(String pincode) {
+	public void setPincode(int pincode) {
 		this.pincode = pincode;
 	}
 

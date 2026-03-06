@@ -73,10 +73,12 @@
 package in.bookstore.main.security;
 
 import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -86,10 +88,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import in.bookstore.main.controller.BookController;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final BookController bookController;
@@ -107,20 +111,19 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // 1. ALWAYS permit OPTIONS requests for CORS preflight
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                
-                // 2. Public endpoints
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/books/**").permitAll()
                 
-                // 3. Protected endpoints
-                .requestMatchers(HttpMethod.POST, "/api/orders").hasAuthority("CUSTOMER")
-                .requestMatchers(HttpMethod.GET, "/api/orders/my").hasAuthority("CUSTOMER")
-                .requestMatchers(HttpMethod.GET, "/api/orders/**").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/orders/**").hasAuthority("ADMIN")
+                // USE hasRole instead of hasAuthority
+                .requestMatchers(HttpMethod.POST, "/api/orders").hasRole("CUSTOMER")
+                .requestMatchers(HttpMethod.GET, "/api/orders/my").hasRole("CUSTOMER")
                 
-                // 4. Everything else needs a login
+                // USE hasRole for ADMIN too
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/orders/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/orders/**").hasRole("ADMIN")
+                
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

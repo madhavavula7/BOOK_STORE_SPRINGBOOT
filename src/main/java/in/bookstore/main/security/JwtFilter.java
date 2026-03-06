@@ -30,36 +30,40 @@ public class JwtFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request,
-			HttpServletResponse response,
-			FilterChain filterChain)
-					throws ServletException, IOException {
+	        HttpServletResponse response,
+	        FilterChain filterChain)
+	                throws ServletException, IOException {
 
-		String header = request.getHeader("Authorization");
+	    String header = request.getHeader("Authorization");
 
-		if(header == null || !header.startsWith("Bearer ")){
-			filterChain.doFilter(request,response);
-			return;
-		}
+	    if(header == null || !header.startsWith("Bearer ")){
+	        filterChain.doFilter(request,response);
+	        return;
+	    }
 
-		String token = header.substring(7);
-		String email = jwtUtil.extractEmail(token);
+	    String token = header.substring(7);
+	    String email = jwtUtil.extractEmail(token);
 
-		// Inside your JwtFilter doFilterInternal
-		if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
-		    User user = repo.findByEmail(email).orElseThrow();
+	 // Inside your JwtFilter doFilterInternal
+	    if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
+	        User user = repo.findByEmail(email).orElseThrow();
 
-		    UsernamePasswordAuthenticationToken auth =
-		            new UsernamePasswordAuthenticationToken(
-		                    user.getEmail(),
-		                    null,
-		                    // Use the string "CUSTOMER" directly to match the Config
-		                    List.of(new SimpleGrantedAuthority("CUSTOMER")) 
-		            );
+	        // GET the role name and ADD the "ROLE_" prefix
+	        // This is the industry standard for Spring Security
+	        String userRole = "ROLE_" + user.getRole().name(); 
 
-		    SecurityContextHolder.getContext().setAuthentication(auth);
-		}
+	        UsernamePasswordAuthenticationToken auth =
+	                new UsernamePasswordAuthenticationToken(
+	                        user.getEmail(),
+	                        null,
+	                        // Now this works for BOTH hasRole() and hasAuthority()
+	                        List.of(new SimpleGrantedAuthority(userRole)) 
+	                );
 
-		filterChain.doFilter(request,response);
+	        SecurityContextHolder.getContext().setAuthentication(auth);
+	    }
+
+	    filterChain.doFilter(request,response);
 	}
 }
 
