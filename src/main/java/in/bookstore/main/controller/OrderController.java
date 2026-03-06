@@ -37,7 +37,7 @@ public class OrderController {
 				.getName();
 	}
 
-	// PLACE ORDER
+	// USER PLACE ORDER
 	@PostMapping
 	public ResponseEntity<ApiResponse<OrderResponse>> placeOrder(
 			@RequestBody @Valid OrderRequest req){
@@ -45,6 +45,15 @@ public class OrderController {
 		return ResponseEntity.ok(
 				new ApiResponse<OrderResponse>(true, "Order placed",
 						service.placeOrder(req, getEmail()))
+				);
+	}
+
+	// USER ORDERS
+	@GetMapping("/my")
+	public ResponseEntity<ApiResponse<List<OrderResponse>>> myOrders(){
+		return ResponseEntity.ok(
+				new ApiResponse<List<OrderResponse>>(true, "My Orders",
+						service.getMyOrders(getEmail()))
 				);
 	}
 
@@ -77,12 +86,5 @@ public class OrderController {
 				);
 	}
 
-	// USER ORDERS
-	@GetMapping("/my")
-	public ResponseEntity<ApiResponse<List<OrderResponse>>> myOrders(){
-		return ResponseEntity.ok(
-				new ApiResponse<List<OrderResponse>>(true, "My Orders",
-						service.getMyOrders(getEmail()))
-				);
-	}
+
 }

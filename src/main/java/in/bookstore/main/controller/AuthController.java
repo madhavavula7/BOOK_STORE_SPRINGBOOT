@@ -32,6 +32,14 @@ public class AuthController {
 	public ResponseEntity<?> login(@RequestBody LoginRequest req){
 		return ResponseEntity.ok(service.login(req));
 	}
+	@PostMapping("/register-admin")
+	public ResponseEntity<?> registerAdmin(@RequestBody RegisterRequest req){
+	    return ResponseEntity.ok(service.registerAdmin(req));
+	}
+	@PostMapping("/admin-login")
+	public ResponseEntity<?> adminLogin(@RequestBody LoginRequest req) {
+	    return ResponseEntity.ok(service.adminLogin(req));
+	}
 	
 	
 }
