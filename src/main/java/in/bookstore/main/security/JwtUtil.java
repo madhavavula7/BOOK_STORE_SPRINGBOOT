@@ -22,7 +22,7 @@ public class JwtUtil {
 
 	public String generateToken(String email){
         long now = System.currentTimeMillis();
-        long expiry = now + (1000 * 60 * 3); 
+        long expiry = now + (1000L * 60 * 60 * 24);
 
         return Jwts.builder()
                 .setSubject(email)
