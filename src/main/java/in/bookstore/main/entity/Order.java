@@ -3,12 +3,15 @@ package in.bookstore.main.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -24,6 +27,8 @@ public class Order {
 	private Long id;
 
 	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	@JsonIgnoreProperties("orders")
 	private User user;
 
 	private Double totalPrice;
@@ -54,6 +59,10 @@ public class Order {
 	private String shippingAddress;
 	private String state;
 	private int pincode;
+	
+	@OneToMany(mappedBy="order", cascade=CascadeType.ALL, orphanRemoval = true)
+	private List<OrderItem> items;
+	
 	public String getState() {
 		return state;
 	}
@@ -167,8 +176,7 @@ public class Order {
 		this.orderDate = LocalDateTime.now();
 	}
 
-	@OneToMany(mappedBy="order",cascade=CascadeType.ALL)
-	private List<OrderItem> items;
+	
 
 	public Long getId() {
 		return id;
