@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import in.bookstore.main.dto.ApiResponse;
 import in.bookstore.main.entity.Book;
 import in.bookstore.main.repository.BookRepository;
+import in.bookstore.main.repository.OrderRepository;
 import in.bookstore.main.repository.UserRepository;
 import in.bookstore.main.service.BookService;
 
@@ -30,6 +31,9 @@ public class AdminController {
     
     @Autowired
     private BookRepository bookRepository;
+    
+    @Autowired
+    private OrderRepository orderRepository;
     
     @Autowired
     private BookService bookService;
@@ -65,4 +69,31 @@ public class AdminController {
             new ApiResponse<>(true, "Inventory updated successfully!", null)
         );
     }
+    
+    @GetMapping("/all-orders")
+    public ResponseEntity<?> getAllOrders() {
+        return ResponseEntity.ok(orderRepository.findAll());
+    }
+    
+    @PutMapping("/order/{orderId}/status")
+    public ResponseEntity<ApiResponse<Object>> updateOrderStatus(
+        @PathVariable Long orderId, 
+        @RequestBody java.util.Map<String, String> request) {
+        
+        return orderRepository.findById(orderId).map(order -> {
+            String newStatus = request.get("status");
+            order.setOrderStatus(newStatus);
+            if ("DELIVERED".equalsIgnoreCase(newStatus)) {
+                order.setPaymentStatus("PAID");
+            } else if ("CANCELLED".equalsIgnoreCase(newStatus)) {
+                order.setPaymentStatus("VOID");
+            }
+            
+            orderRepository.save(order);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Logistics updated", null));
+            
+        }).orElse(ResponseEntity.status(404).body(new ApiResponse<>(false, "Order not found", null)));
+    }
+    
+    
 }
