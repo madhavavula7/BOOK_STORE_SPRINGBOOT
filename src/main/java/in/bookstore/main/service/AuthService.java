@@ -1,11 +1,17 @@
 package in.bookstore.main.service;
 
+import in.bookstore.main.dto.ApiResponse;
+import in.bookstore.main.dto.AuthResponse;
 import in.bookstore.main.dto.LoginRequest;
 import in.bookstore.main.dto.RegisterRequest;
+import jakarta.servlet.Registration;
 
 public interface AuthService {
-	String register(RegisterRequest req);
-	String login(LoginRequest req);
-	public String registerAdmin(RegisterRequest req);
-	public String adminLogin(LoginRequest req);
+
+    String register(RegisterRequest req);
+    String registerAdmin(RegisterRequest req);
+
+
+    ApiResponse<AuthResponse> login(LoginRequest req);
+    ApiResponse<AuthResponse> adminLogin(LoginRequest req);
 }

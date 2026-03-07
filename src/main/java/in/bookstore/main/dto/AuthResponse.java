@@ -2,12 +2,29 @@ package in.bookstore.main.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Data
+@NoArgsConstructor
 public class AuthResponse {
 	private String token;
+	private String role;
 	private String message;
+	
+	
+	public AuthResponse(String token, String role, String message) {
+		super();
+		this.token = token;
+		this.role = role;
+		this.message = message;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public String getToken() {
 		return token;
 	}

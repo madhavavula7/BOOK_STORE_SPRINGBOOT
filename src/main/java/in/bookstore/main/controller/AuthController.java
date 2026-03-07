@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.bookstore.main.dto.AuthResponse;
 import in.bookstore.main.dto.LoginRequest;
 import in.bookstore.main.dto.RegisterRequest;
 import in.bookstore.main.service.AuthService;
