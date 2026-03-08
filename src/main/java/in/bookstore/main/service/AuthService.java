@@ -4,7 +4,6 @@ import in.bookstore.main.dto.ApiResponse;
 import in.bookstore.main.dto.AuthResponse;
 import in.bookstore.main.dto.LoginRequest;
 import in.bookstore.main.dto.RegisterRequest;
-import jakarta.servlet.Registration;
 
 public interface AuthService {
 

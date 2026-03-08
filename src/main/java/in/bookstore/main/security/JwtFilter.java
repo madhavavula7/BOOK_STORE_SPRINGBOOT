@@ -44,12 +44,10 @@ public class JwtFilter extends OncePerRequestFilter {
 	    String token = header.substring(7);
 	    String email = jwtUtil.extractEmail(token);
 
-	 // Inside your JwtFilter doFilterInternal
 	    if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
 	        User user = repo.findByEmail(email).orElseThrow();
 
 	        // GET the role name and ADD the "ROLE_" prefix
-	        // This is the industry standard for Spring Security
 	        String userRole = "ROLE_" + user.getRole().name(); 
 
 	        UsernamePasswordAuthenticationToken auth =

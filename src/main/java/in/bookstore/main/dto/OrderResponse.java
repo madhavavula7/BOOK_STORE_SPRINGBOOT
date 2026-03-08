@@ -11,7 +11,6 @@ public class OrderResponse {
     private String customer;
     private String email;
     
-    // --- NEW ADDRESS FIELDS ---
     private String shippingAddress; 
     private String billingAddress;
     private String state;
