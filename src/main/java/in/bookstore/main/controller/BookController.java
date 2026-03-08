@@ -25,13 +25,13 @@ public class BookController {
 	@Autowired
 	private BookService service;
 
-	
-
+//	get all the book to display the user.
 	@GetMapping
 	public List<Book> getAll(){
 		return service.getAll();
 	}
 	
+//	adding books by admin.
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
 	public Book add(@RequestBody BookRequest dto){

@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional // Ensures stock and order details are rolled back if something fails
     public OrderResponse placeOrder(OrderRequest req, String email) {
-        // 1. Fetch User
+        // Fetch User
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem> items = new ArrayList<>();
         double subTotal = 0;
 
-        // 2. Process Items and Deduct Stock
+        // Process Items and Deduct Stock
         for (OrderRequest.Item i : req.getItems()) {
             Book book = bookRepo.findById(i.getBookId())
                     .orElseThrow(() -> new RuntimeException("Book not found: " + i.getBookId()));
@@ -80,30 +80,30 @@ public class OrderServiceImpl implements OrderService {
             items.add(item);
         }
 
-        // 3. Invoice Calculations
+        // Invoice Calculations
         double taxRate = 0.18; // 18% GST/VAT
         double shipping = subTotal > 500 ? 0.0 : 40.0; // Free shipping over ₹500
         double taxAmount = subTotal * taxRate;
         double finalTotal = subTotal + taxAmount + shipping;
 
-        // 4. Set Financial Details to Order Entity
+        // Set Financial Details to Order Entity
         order.setItems(items);
         order.setNetAmount(subTotal);
         order.setTaxAmount(taxAmount);
         order.setShippingCharges(shipping);
         order.setTotalPrice(finalTotal);
 
-        // 5. Save initially to generate the Database ID
+        // Save initially to generate the Database ID
         Order savedOrder = orderRepo.save(order);
 
-        // 6. Generate and update the Unique Invoice Number
+        // Generate and update the Unique Invoice Number
         // Format: INV-2026-00001
         String invoiceNo = String.format("INV-%d-%05d", 
                             java.time.LocalDate.now().getYear(), 
                             savedOrder.getId());
         savedOrder.setInvoiceNumber(invoiceNo);
 
-        // 7. Final save and map to DTO
+        // Final save and map to DTO
         return map(orderRepo.save(savedOrder));
     }
 

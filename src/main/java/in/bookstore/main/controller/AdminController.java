@@ -50,7 +50,7 @@ public class AdminController {
         return ResponseEntity.ok(bookRepository.findAll());
     }
 
-    // 3. Delete any User (Power Action)
+    // Delete any User by amdin.
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
     	if(!userRepository.existsById(id)) {
